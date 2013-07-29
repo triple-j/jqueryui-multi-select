@@ -19,7 +19,7 @@
 
 		<script>
 			$( document ).ready(function() {
-				$('#enhanced').multiselect();
+				$('.enhanced').multiselect();
 			});
 		</script>
 
@@ -48,7 +48,7 @@
 			<h1>Enhanced</h1>
 			<form>
 
-			<select id="enhanced" name="multiselect[]" multiple>
+			<select class="enhanced" name="multiselect[]" multiple>
 				<optgroup label="Group 1">
 					<option>Option 1.1</option>
 				</optgroup>
@@ -63,16 +63,19 @@
 				</optgroup>
 			</select>
 
+			<select class="enhanced" name="multiselect_2[]" multiple>
+				<option>Option 1.1</option>
+				<option>Option 2.1</option>
+				<option>Option 2.2</option>
+				<option disabled>Option 3.1</option>
+				<option>Option 3.2</option>
+				<option>Option 3.3</option>
+			</select>
+
 			<input type="submit" name="process" />
 			</form>
 		</section>
 
-
-		<?php if ( isset($_REQUEST['process']) ): ?>
-		<section>
-			<pre><?php print_r($_REQUEST); ?></pre>
-		</section>
-		<?php endif; ?>
 
 	</body>
 </html>
