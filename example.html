@@ -13,13 +13,20 @@
 		<style>
 			select[multiple] {
 				min-width: 12em;
-				min-height: 16em;
+				min-height: 12em;
 			}
 		</style>
 
 		<script>
 			$( document ).ready(function() {
 				$('.enhanced').multiselect();
+				$('.enhanced2').multiselect({
+					toLeftText: "<-",
+					toRightText: "->",
+					change: function() {
+						alert("things changed");
+					}
+				});
 			});
 		</script>
 
@@ -62,8 +69,24 @@
 					<option>Option 3.3</option>
 				</optgroup>
 			</select>
-
+			<br />
 			<select class="enhanced" name="multiselect_2[]" multiple>
+				<optgroup label="Group 1">
+					<option>Option 1.1</option>
+				</optgroup>
+				<optgroup label="Group 2">
+					<option selected>Option 2.1</option>
+					<option>Option 2.2</option>
+				</optgroup>
+				<optgroup label="Group 3">
+					<option>Option 3.1</option>
+					<option disabled>Option 3.2</option>
+					<option>Option 3.3</option>
+				</optgroup>
+			</select>
+
+			<h2>Custom 'on change'</h2>
+			<select class="enhanced2" name="multiselect_custom[]" multiple>
 				<option>Option 1.1</option>
 				<option>Option 2.1</option>
 				<option>Option 2.2</option>
@@ -72,6 +95,7 @@
 				<option>Option 3.3</option>
 			</select>
 
+			<br />
 			<input type="submit" name="process" />
 			</form>
 		</section>

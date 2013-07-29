@@ -15,7 +15,7 @@
 
 		// the constructor
 		_create: function() {
-			this.wrapper      = $('<div/>').addClass("ui-multi-select");
+			this.wrapper      = $('<span/>').addClass("ui-multi-select");
 			this.leftElement  = $('<select/>',{multiple:true}).addClass("select-left");
 			this.rightElement = $('<select/>',{multiple:true}).addClass("select-right");
 			this.buttonGrp    = $('<span/>').addClass("button-group");
@@ -41,13 +41,13 @@
 			this._on(this.toRightBtn, {click:"moveToRight"});
 			this._on(this.element, {change:"_refresh"});
 
-			this._refresh();
+			this._refresh( false );
 		},
 
 		// called when created, and later when changing options
-		_refresh: function() {
-			console.log('refresh');
-
+		_refresh: function( triggerChange ) {
+			triggerChange = (typeof triggerChange == "undefined") ? true : triggerChange;
+			
 			var thisWidget = this;
 			var leftElm   = this.leftElement;
 			var rightElm  = this.rightElement;
@@ -63,17 +63,12 @@
 			this.element.find('option').each(function(idx,elm) {
 				var elmValue = $(elm).attr('value');
 				var selected = $(elm).prop('selected');
-
-				if ( selected ) {
-					thisWidget.simularOption( elm, leftElm ).remove();
-				} else {
-					thisWidget.simularOption( elm, rightElm ).remove();
-				}
-
+				
+				thisWidget.simularOption( elm, (selected ? leftElm : rightElm) ).remove();
 			});
 
 			// trigger a callback/event
-			this._trigger( "change" );
+			if ( triggerChange ) this._trigger( "change" );
 		},
 
 		// events bound via _on are removed automatically
@@ -115,7 +110,6 @@
 
 		// move selected <option>s from the right to the left
 		moveToLeft: function() {
-			console.log("move to left");
 			var thisWidget = this;
 			this.rightElement.find('option:selected').each(function(idx,elm) {
 				thisWidget.simularOption(elm).prop('selected',false);
@@ -126,7 +120,6 @@
 
 		// move selected <option>s from the left to the right
 		moveToRight: function() {
-			console.log("move to right");
 			var thisWidget = this;
 			this.leftElement.find('option:selected').each(function(idx,elm) {
 				thisWidget.simularOption(elm).prop('selected',true);
