@@ -46,11 +46,11 @@
 
 		// called when created, and later when changing options
 		_refresh: function( triggerChange ) {
-			triggerChange = (typeof triggerChange == "undefined") ? true : triggerChange;
+			triggerChange = (typeof triggerChange === "undefined") ? true : triggerChange;
 			
-			var thisWidget = this;
-			var leftElm   = this.leftElement;
-			var rightElm  = this.rightElement;
+			var thisWidget = this,
+			    leftElm    = this.leftElement,
+			    rightElm   = this.rightElement;
 
 			leftElm.children().remove();
 			leftElm.append( this.element.children().clone() );
@@ -61,14 +61,12 @@
 			rightElm.find('option:selected').prop('selected',false);
 
 			this.element.find('option').each(function(idx,elm) {
-				var elmValue = $(elm).attr('value');
 				var selected = $(elm).prop('selected');
-				
 				thisWidget.simularOption( elm, (selected ? leftElm : rightElm) ).remove();
 			});
 
 			// trigger a callback/event
-			if ( triggerChange ) this._trigger( "change" );
+			if ( triggerChange ) { this._trigger( "change" ); }
 		},
 
 		// events bound via _on are removed automatically
@@ -85,8 +83,8 @@
 		
 		// _setOption is called for each individual option that is changing
 		_setOption: function( key, value ) {
-			if ( key == "toLeftText" ) this.toLeftBtn.button('option', 'label', value);
-			if ( key == "toRightText" ) this.toRightBtn.button('option', 'label', value);
+			if ( key == "toLeftText" ) { this.toLeftBtn.button('option', 'label', value); }
+			if ( key == "toRightText" ) { this.toRightBtn.button('option', 'label', value); }
 			this._super( key, value );
 		},
 
@@ -94,8 +92,8 @@
 		simularOption: function( optionElm, selectElm ) {
 			selectElm = selectElm || this.element;
 
-			var $found   = $([]);
-			var optValue = $(optionElm).attr('value');
+			var $found   = $([]),
+			    optValue = $(optionElm).attr('value');
 
 			$(selectElm).find('option').each(function(idx,elm) {
 				var elmValue = $(elm).attr('value');
