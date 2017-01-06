@@ -55,10 +55,14 @@
             leftElm.children().remove();
             leftElm.append( this.element.children().clone() );
             leftElm.find('option:selected').prop('selected',false);
+            
+            this._on(leftElm.find('optgroup'), {click:"selectGroupOptions"});
 
             rightElm.children().remove();
             rightElm.append( this.element.children().clone() );
             rightElm.find('option:selected').prop('selected',false);
+            
+            this._on(rightElm.find('optgroup'), {click:"selectGroupOptions"});
 
             this.element.find('option').each(function(idx,elm) {
                 var selected = $(elm).prop('selected');
@@ -123,6 +127,29 @@
                 thisWidget.simularOption(elm).prop('selected',true);
             });
             this._refresh();
+            return false;
+        },
+        
+        // select all children <option>s of a group, but don't move them
+        selectGroupOptions: function(event) {
+            var optgroupElm = $(event.target),
+                selectElm = optgroupElm.parent();
+            
+            // make sure it was the `<optgroup>` element that was clicked and not a child element
+            if (!optgroupElm.is('optgroup')) {
+                return false;
+            }
+            
+            // deselect other options
+            selectElm.find('option:selected').each(function(idx,elm) {
+                $(elm).prop('selected',false);
+            });
+            
+            // select this group's options
+            optgroupElm.find('option:not(:disabled)').each(function(idx,elm) {
+                $(elm).prop('selected',true);
+            });
+            
             return false;
         }
 
