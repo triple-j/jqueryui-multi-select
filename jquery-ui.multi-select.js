@@ -140,10 +140,12 @@
                 return false;
             }
             
-            // deselect other options
-            selectElm.find('option:selected').each(function(idx,elm) {
-                $(elm).prop('selected',false);
-            });
+            // deselect other options (if the `CTRL` key is not pressed)
+            if (!event.ctrlKey) {
+                selectElm.find('option:selected').each(function(idx,elm) {
+                    $(elm).prop('selected',false);
+                });
+            }
             
             // select this group's options
             optgroupElm.find('option:not(:disabled)').each(function(idx,elm) {
